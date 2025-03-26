@@ -4,10 +4,19 @@
 
 ## INTRODUCCION 
 
+<details>
+ <summary> Lab </summary>
 
 ## LABORATORIOS (playground)
 
 ![Lab](./lab2.png)
+
+#### Requisitos de Hardware 
+
+| host               | cpu's     | ram    | memory |
+|--------------------|---------|--------|----------|
+| MAIN OCS SERVER    |  4      | 4 GB   | 30 GB    | 
+| OCS AGENT          |  2      | 2GB    | 15GB     |
 
 ### Laboratorio participante 01 (Mike)
 
@@ -95,6 +104,7 @@
 | MAIN OCS SERVER    | miguel  | miguel2025 | 10.0.0.2  | taller2025    |
 | OCS AGENT          | miguel  | miguel2025 | 10.0.0.3  | taller2025    |
 
+ </details>
 
 ## RECURSOS
  
