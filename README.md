@@ -2,8 +2,6 @@
 
 ----
 
-## INTRODUCCION 
-
 
 
 ## LABORATORIOS (playground)
@@ -109,9 +107,13 @@
  </details>
 
 ## RECURSOS
+
+
+
+
  
 ### OCS INVENTORY NG SERVER
-ß
+
 
 
 
@@ -119,6 +121,173 @@
 
 
 ## INSTALACION
+
+### Paso 1: Instalacion y Configuracion de MariaDB.
+
+#### 1.1 instalacion.
+
+```bash
+sudo dnf install -y mariadb-server mariadb
+```
+
+#### 1.2: Iniciar y habilitar el servicio de MariaDB
+
+```bash
+# Iniciar el servicio
+sudo systemctl start mariadb
+
+# Habilitar para que arranque en el inicio del sistema
+sudo systemctl enable mariadb
+```
+#### 1.3: Verificar el estado del servicio.
+
+```bash
+sudo systemctl status mariadb.service
+```
+- Si todo está bien, debería mostrar algo como:
+```bash
+Active: active (running)
+```
+### 1.4: Configurar MariaDB con mysql_secure_installation.
+
+ ```bash
+sudo mysql_secure_installation
+```
+- Durante la configuración:
+```
+Enter current password for root: Presiona Enter si no hay contraseña.
+
+Set root password? [Y/n]: Y para establecer una contraseña para root (dbaccespass).
+
+Remove anonymous users? [Y/n]: Y
+
+Disallow root login remotely? [Y/n]: Y
+
+Remove test database and access to it? [Y/n]: Y
+
+Reload privilege tables now? [Y/n]: Y
+```
+
+
+#### 1.5: Creacion de las base de datos y el suario para ocs inventory.
+ 
+- Base de Datos (ocsdb)
+
+```sql
+
+CREATE DATABASE ocs_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+```
+- Db User (ocs_user)
+```sql
+CREATE USER 'ocs_user'@'localhost' IDENTIFIED BY 'pass';
+```
+> [!CAUTION]
+> Cambia **pass** por una contraseña segura.
+
+- Otorgar permisos al usuario sobre la base de datos
+
+```sql
+GRANT ALL PRIVILEGES ON ocs_db.* TO 'ocs_user'@'localhost';
+```
+>[!NOTE]
+>Esto permite que **ocs_user** tenga control total sobre la base de datos **ocs_db**.
+
+- Aplicar los cambios y salimos.
+```sql
+FLUSH PRIVILEGES;
+
+EXIT;
+```
+---
+
+
+
+
+### Paso 2: Instalacion del servidor APACHE (HTTPD)
+
+#### 2.1: Instalar Apache
+
+```bash
+sudo dnf install -y httpd
+```
+#### 2.2: Iniciar y habilitar Apache
+
+```bash
+# Iniciar el servicio de Apache
+sudo systemctl start httpd
+
+# Habilitar Apache para que arranque en el inicio del sistema
+sudo systemctl enable httpd
+
+```
+
+#### 2.3: Verificar el estado del servicio
+
+```bash
+sudo systemctl status httpd
+
+```
+- Si todo está bien, debería mostrar algo como:
+```bash
+Active: active (running)
+```
+
+#### 2.4: Configurar el firewall para permitir tráfico HTTP/HTTPS
+
+```bash
+# Permitir tráfico HTTP
+sudo firewall-cmd --permanent --add-service=http
+
+# Permitir tráfico HTTPS
+sudo firewall-cmd --permanent --add-service=https
+
+# Recargar la configuración del firewall
+sudo firewall-cmd --reload
+```
+- Verificar que Apache sirva contenido:
+```
+http://<tu-ip>/
+```
+![imagen del servidor apache](./httpd_test.png)
+
+---
+
+
+
+
+### Paso 3: otras dependecias
+
+
+#### 3.1: Instalar PHP y módulos necesarios
+```bash
+#habilitamos php 8.1
+sudo dnf module enable php:8.1 -y
+
+
+sudo dnf install -y php php-zip php-cli php-mysqlnd php-xml php-mbstring php-process php-gd  php-soap php-ldap graphviz
+```
+#### 3.2: Verificar la instalación de PHP
+
+```bash
+php -v
+```
+- Si todo está bien, debería mostrar algo como:
+```bash
+Active: active (running)
+```
+
+#### 3.4: Reiniciar Apache para aplicar cambios
+
+```bash
+sudo systemctl restart httpd
+```
+
+## Instalacion de ocs inventory
+
+
+
+
 
 ## CONFIGURACION
 
