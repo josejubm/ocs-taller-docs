@@ -108,13 +108,17 @@
 
 ## RECURSOS
 
+- OCS INVENTORY NG SERVER
 
+```bash
+wget
+```
 
+- OCS INVENTORY UNIX/AGENTE
 
- 
-### OCS INVENTORY NG SERVER
-
-
+```bash
+wget
+```
 
 
 ## DEPENDENCIAS
@@ -175,7 +179,7 @@ Reload privilege tables now? [Y/n]: Y
 
 ```sql
 
-CREATE DATABASE ocs_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE ocsweb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ```
 - Db User (ocs_user)
@@ -188,7 +192,7 @@ CREATE USER 'ocs_user'@'localhost' IDENTIFIED BY 'pass';
 - Otorgar permisos al usuario sobre la base de datos
 
 ```sql
-GRANT ALL PRIVILEGES ON ocs_db.* TO 'ocs_user'@'localhost';
+GRANT ALL PRIVILEGES ON ocsweb.* TO 'ocs_user'@'localhost';
 ```
 >[!NOTE]
 >Esto permite que **ocs_user** tenga control total sobre la base de datos **ocs_db**.
@@ -261,11 +265,8 @@ http://<tu-ip>/
 
 #### 3.1: Instalar PHP y módulos necesarios
 ```bash
-#habilitamos php 8.1
-sudo dnf module enable php:8.1 -y
 
-
-sudo dnf install -y php php-zip php-cli php-mysqlnd php-xml php-mbstring php-process php-gd  php-soap php-ldap graphviz
+sudo dnf install -y php php-mysqlnd
 ```
 #### 3.2: Verificar la instalación de PHP
 
