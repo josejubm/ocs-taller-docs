@@ -787,6 +787,19 @@ sudo setenforce 1
 
 ```
 
+### archivos de configuracion
+- /etc/httpd/conf.d/z-ocsinventory-server.conf
+```bash 
+<Directory "/usr/share/ocsinventory-reports">
+	AllowOverride None
+	Require all granted
+</Directory>
+
+<Directory "/var/www/html/ocsapi">
+	Require all granted
+</Directory>
+```
+
 ## Instalacion del AGENTE en linux
 
 - instalacion de dependecias
